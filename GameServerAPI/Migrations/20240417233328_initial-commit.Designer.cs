@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameServerAPI.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240415182013_AddSeedData")]
-    partial class AddSeedData
+    [Migration("20240417233328_initial-commit")]
+    partial class initialcommit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,23 +94,43 @@ namespace GameServerAPI.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "41f21be2-863c-4e20-8521-a7466d5be70f",
+                            ConcurrencyStamp = "c47f3d67-083a-4aa0-96df-94b15b41a325",
                             Email = "admin@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEN347acCVhUeEbFwjNJKdWY9+d3fIaGFan9DeBX5rE7N7a1OPMieA96WdJ3V5tMJCQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMETyIoEVIjXcAiSln52767zM6/eMBcEWy8OuefTwZrj1DI4M/pPfOoHPkaLk0TVhQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "988f3a75-0532-48e2-8dc2-78a802d29969",
+                            SecurityStamp = "7bf0a75b-c373-4e67-b29e-e156d530d428",
                             TwoFactorEnabled = false,
                             UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ec87af92-082b-48a1-b979-44e11e89ec2a",
+                            Email = "server@example.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SERVER@EXAMPLE.COM",
+                            NormalizedUserName = "SERVER",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK1apVHDyBKkCcqEIYgI7yAHuizQ+qHR1pIKvt50qHtPqf6+dtSkljlgS5tAo8upCA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "29f61bf5-d5bb-49f6-b150-40c0f1a4213a",
+                            TwoFactorEnabled = false,
+                            UserName = "server"
                         });
                 });
 
             modelBuilder.Entity("GameServerAPI.Models.GameServer", b =>
                 {
                     b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatorUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IPAddress")
@@ -128,6 +148,8 @@ namespace GameServerAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorUserId");
 
                     b.ToTable("GameServers");
                 });
@@ -168,6 +190,12 @@ namespace GameServerAPI.Migrations
                         new
                         {
                             Id = "2",
+                            Name = "Server",
+                            NormalizedName = "SERVER"
+                        },
+                        new
+                        {
+                            Id = "3",
                             Name = "Player",
                             NormalizedName = "PLAYER"
                         });
@@ -264,6 +292,11 @@ namespace GameServerAPI.Migrations
                         {
                             UserId = "1",
                             RoleId = "1"
+                        },
+                        new
+                        {
+                            UserId = "2",
+                            RoleId = "2"
                         });
                 });
 
@@ -284,6 +317,17 @@ namespace GameServerAPI.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("GameServerAPI.Models.GameServer", b =>
+                {
+                    b.HasOne("GameServerAPI.Models.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

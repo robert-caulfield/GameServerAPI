@@ -91,15 +91,15 @@ namespace GameServerAPI.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3059a4e1-29ed-44e3-a086-ffb486c174c4",
+                            ConcurrencyStamp = "c47f3d67-083a-4aa0-96df-94b15b41a325",
                             Email = "admin@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAFqOBazBRHGnLrfHwI2oQ80mCuuAV6q7HjQiavNbwZCtKD/ZJUI7K6FEisFMXrIPw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMETyIoEVIjXcAiSln52767zM6/eMBcEWy8OuefTwZrj1DI4M/pPfOoHPkaLk0TVhQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "dcd27cbc-fd49-4297-8978-b215100df99e",
+                            SecurityStamp = "7bf0a75b-c373-4e67-b29e-e156d530d428",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -107,15 +107,15 @@ namespace GameServerAPI.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8a5226c5-3934-4c7a-bd87-cb6ca2d9f9ea",
+                            ConcurrencyStamp = "ec87af92-082b-48a1-b979-44e11e89ec2a",
                             Email = "server@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "SERVER@EXAMPLE.COM",
                             NormalizedUserName = "SERVER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEF6FN5U8nMuh8lWZk79n3o7gwVYoMopw5T2hRnqTXUTyQNVipybfr6VmBZPcRG9Hpg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK1apVHDyBKkCcqEIYgI7yAHuizQ+qHR1pIKvt50qHtPqf6+dtSkljlgS5tAo8upCA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fc2a0d7f-7739-491f-9b2e-4fb815411047",
+                            SecurityStamp = "29f61bf5-d5bb-49f6-b150-40c0f1a4213a",
                             TwoFactorEnabled = false,
                             UserName = "server"
                         });
