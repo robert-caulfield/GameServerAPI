@@ -26,14 +26,42 @@ The API employs a hybrid data storage approach to efficiently handle both persis
 #### In-Memory Storage
 - **Game Server Data**: Maintains data subject to frequent updates, such as player counts, in a thread-safe dictionary. This approach minimizes the load on the database.
 
-## API Controllers
+## API Overview
 
-The API is documented using Swagger. You can view a static page of the documentation [here]
+### Authentication
 
-- **Auth Controller**: Manages user authentication and registration, issuing JWTS for authenticated sessions.
-- **Game Server Controller**: Manages game server lifecycle operations including registration, status updates, and validation of PlayerJoinTokens.
-- **Server Browser Controller**: Allows players to view active game servers and their details.
-- **Player Token Controller**: Issues PlayerJoinTokens that are used to authenticate players to game servers.
+**Endpoint:** `/api/auth`
+
+- `POST /login` - Authenticates a user based on login credentials.
+- `POST /register` - Registers a new user with provided information.
+
+Authentication is handled using JWTs. To access protected routes, include a `Bearer` token in the `Authorization` header.
+
+### Game Servers
+
+**Endpoint:** `/api/game-servers`
+
+- `POST /` - Registers a new game server.
+- `POST /{id}/players/validate` - Validates a PlayerJoinToken.
+- `DELETE /{id}` - Removes a registered game server.
+- `POST /{id}/heartbeat` - Updates the heartbeat timestamp for a game server.
+- `PATCH /{id}/cache` - Updates the cache of a game server using a JSON patch document.
+
+### Player Tokens
+
+**Endpoint:** `/api/player-tokens`
+
+- `POST /generate-token` - Generates a unique PlayerJoinToken for player-server interactions.
+
+### Server Browser
+
+**Endpoint:** `/api/server-browser`
+
+- `GET /` - Retrieves a list of all registered game servers.
+
+### Security
+
+The API uses HTTP Bearer authentication. Secure your requests with a JWT in the `Authorization` header formatted as `Bearer <token>`.
 
 ## Database Schema
 
@@ -54,6 +82,26 @@ The API is documented using Swagger. You can view a static page of the documenta
 - **Player**
   - Can request player join tokens.
   - Cannot create servers.
+
+<details>
+<summary><strong>Customizing Seeded Data</strong></summary>
+<p>
+
+By default, the following accounts are seeded into the database:
+1. **Admin Account**:
+   - **Username**: admin
+   - **Password**: Admin123$
+   - **Role**: Admin
+
+2. **Server Account**:
+   - **Username**: server
+   - **Password**: Server123$
+   - **Role**: Server
+
+To customize the predefined roles and user accounts before seeding the database, edit the seed data in the `OnModelCreating` method of the [`ApplicationDbContext`](GameServerAPI/Data/ApplicationDBContext.cs). Modify the user details and roles as needed and then apply the changes by running the database migration with the command `Update-Database` in the Package Manager Console or `dotnet ef database update` in the terminal.
+
+</p>
+</details>
 
 ## Implementation and Usage
 
