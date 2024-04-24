@@ -28,36 +28,13 @@ The API employs a hybrid data storage approach to efficiently handle both persis
 
 ## API Overview
 
-### Authentication
+The API is documented using Swagger. You can view a static page of the documentation by [here](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/robert-caulfield/GameServerAPI/master/GameServerAPI/SwaggerExamples/JSON/swagger.json).
 
-**Endpoint:** `/api/auth`
-
-- `POST /login` - Authenticates a user based on login credentials.
-- `POST /register` - Registers a new user with provided information.
-
-Authentication is handled using JWTs. To access protected routes, include a `Bearer` token in the `Authorization` header.
-
-### Game Servers
-
-**Endpoint:** `/api/game-servers`
-
-- `POST /` - Registers a new game server.
-- `POST /{id}/players/validate` - Validates a PlayerJoinToken.
-- `DELETE /{id}` - Removes a registered game server.
-- `POST /{id}/heartbeat` - Updates the heartbeat timestamp for a game server.
-- `PATCH /{id}/cache` - Updates the cache of a game server using a JSON patch document.
-
-### Player Tokens
-
-**Endpoint:** `/api/player-tokens`
-
-- `POST /generate-token` - Generates a unique PlayerJoinToken for player-server interactions.
-
-### Server Browser
-
-**Endpoint:** `/api/server-browser`
-
-- `GET /` - Retrieves a list of all registered game servers.
+### Controller Overview
+- **Auth Controller**: Manages user authentication and registration, issuing JWTS for authenticated sessions.
+- **Game Server Controller**: Manages game server lifecycle operations including registration, status updates, and validation of PlayerJoinTokens.
+- **Server Browser Controller**: Allows players to view active game servers and their details.
+- **Player Token Controller**: Issues PlayerJoinTokens that are used to authenticate players to game servers.
 
 ### Security
 
