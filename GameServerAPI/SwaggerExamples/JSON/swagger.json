@@ -1,0 +1,1129 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Game Server API",
+    "description": "An API that facilitates a secure multiplayer gaming environment. Allows for game server management, authentication of players, and access to game server information.",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Authenticates a user based on their login credentials.",
+        "requestBody": {
+          "description": "The login request containing the user's credentials.",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful. Stores LoginResponseDTO in APIResponse.Result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDTOAPIResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "There was a problem logging in with provided login information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                },
+                "example": {"statusCode":400,"isSuccess":false,"errors":["Invalid information provided"],"result":null}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Registers a new user with the provided registration information.",
+        "requestBody": {
+          "description": "The registration request containing the user's information.",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequestDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequestDTO"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequestDTO"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequestDTO"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registration successful. Stores UserDTO in APIResponse.Result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTOAPIResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Could not register new user with provided information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                },
+                "example": {"statusCode":400,"isSuccess":false,"errors":["Invalid information provided"],"result":null}
+              }
+            }
+          },
+          "500": {
+            "description": "A server error was ecountered in registration process.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                },
+                "example": {"statusCode":500,"isSuccess":false,"errors":["A server error was encountered."],"result":null}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/game-servers": {
+      "post": {
+        "tags": [
+          "GameServer"
+        ],
+        "summary": "Registers a new game server to be stored in the API.",
+        "requestBody": {
+          "description": "Data required to register a new game server.",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerRegisterDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerRegisterDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerRegisterDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerRegisterDTO"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerRegisterDTO"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerRegisterDTO"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerRegisterDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful. Returns Server Id in APIResponse.Result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringAPIResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Could not register game server with provided information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                },
+                "example": {"statusCode":400,"isSuccess":false,"errors":["Invalid information provided"],"result":null}
+              }
+            }
+          },
+          "500": {
+            "description": "Server error encountered while registering game server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                },
+                "example": {"statusCode":500,"isSuccess":false,"errors":["A server error was encountered."],"result":null}
+              }
+            }
+          },
+          "401": {
+            "description": "Request is unauthorized."
+          }
+        }
+      }
+    },
+    "/api/game-servers/{id}/players/validate": {
+      "post": {
+        "tags": [
+          "GameServer"
+        ],
+        "summary": "Validates a PlayerJoinToken, and returns player information if validation is successful",
+        "description": "Ensures that:<br />\r\n    - The token is valid.<br />\r\n    - The PlayerToken.ServerId matches the requesting server's Id.<br />",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "String that represents the id of the game server.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "A DTO containing the PlayerJoinToken to be validated.",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerValidatePlayerDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerValidatePlayerDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerValidatePlayerDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerValidatePlayerDTO"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerValidatePlayerDTO"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerValidatePlayerDTO"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/GameServerValidatePlayerDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful. Returns PlayerProfileDTO in APIResponse.Result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayerProfileDTOAPIResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Provided PlayerJoinToken is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                },
+                "example": {"statusCode":400,"isSuccess":false,"errors":["Invalid information provided"],"result":null}
+              }
+            }
+          },
+          "403": {
+            "description": "Provided Id isnt associated with a game server, or invalid access to game server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                },
+                "example": {"statusCode":403,"isSuccess":false,"errors":["Invalid authorization level to access resource."],"result":null}
+              }
+            }
+          },
+          "401": {
+            "description": "Request is unauthorized."
+          }
+        }
+      }
+    },
+    "/api/game-servers/{id}": {
+      "delete": {
+        "tags": [
+          "GameServer"
+        ],
+        "summary": "Removes the GameServer from the API.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "String that represents the id of the game server.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid auth token or game server Id.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                },
+                "example": {"statusCode":400,"isSuccess":false,"errors":["Invalid information provided"],"result":null}
+              }
+            }
+          },
+          "403": {
+            "description": "Provided Id isnt associated with a game server, or invalid access to game server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                },
+                "example": {"statusCode":403,"isSuccess":false,"errors":["Invalid authorization level to access resource."],"result":null}
+              }
+            }
+          },
+          "204": {
+            "description": "Game server successfully removed."
+          },
+          "401": {
+            "description": "Request is unauthorized."
+          }
+        }
+      }
+    },
+    "/api/game-servers/{id}/heartbeat": {
+      "post": {
+        "tags": [
+          "GameServer"
+        ],
+        "summary": "Validates that a server key is associated with a registered game server\r\nand updates the game server's heartbeat.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "String that represents the id of the game server.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Provided ServerToken is null or empty.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                },
+                "example": {"statusCode":400,"isSuccess":false,"errors":["Invalid information provided"],"result":null}
+              }
+            }
+          },
+          "403": {
+            "description": "Provided Id isnt associated with a game server, or invalid access to game server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                },
+                "example": {"statusCode":403,"isSuccess":false,"errors":["Invalid authorization level to access resource."],"result":null}
+              }
+            }
+          },
+          "204": {
+            "description": "Heartbeat successfully updated."
+          },
+          "401": {
+            "description": "Request is unauthorized."
+          }
+        }
+      }
+    },
+    "/api/game-servers/{id}/cache": {
+      "patch": {
+        "tags": [
+          "GameServer"
+        ],
+        "summary": "Updates the cache of a game server using a JSON patch document",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "String that represents the id of the game server.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Operation"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Operation"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Operation"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Operation"
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Operation"
+                }
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Operation"
+                }
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Operation"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Patch document invalid or Serverkey is null or empty.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                },
+                "example": {"statusCode":400,"isSuccess":false,"errors":["Invalid information provided"],"result":null}
+              }
+            }
+          },
+          "403": {
+            "description": "Provided Id isnt associated with a game server, or invalid access to game server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                },
+                "example": {"statusCode":403,"isSuccess":false,"errors":["Invalid authorization level to access resource."],"result":null}
+              }
+            }
+          },
+          "204": {
+            "description": "The cache was successfully updated."
+          },
+          "401": {
+            "description": "Request is unauthorized."
+          }
+        }
+      }
+    },
+    "/api/player-tokens/generate-token": {
+      "post": {
+        "tags": [
+          "PlayerToken"
+        ],
+        "summary": "Generates a unique token that the player will hand off to game servers when joining",
+        "requestBody": {
+          "description": "Contains information about the game server the player desires to join.",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerTokenRequestDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerTokenRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerTokenRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerTokenRequestDTO"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerTokenRequestDTO"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerTokenRequestDTO"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerTokenRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful. Stores player join JWT token in APIResponse.Result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringAPIResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/server-browser": {
+      "get": {
+        "tags": [
+          "ServerBrowser"
+        ],
+        "summary": "Gets a list of all currently registered game servers.",
+        "responses": {
+          "200": {
+            "description": "Successful. Stores list of GameServerResponseDTOs in APIResponse.Result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameServerDetailsDTOListAPIResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "APIResponse": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "description": "Indicates whether request was successful."
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of errors, if any, describing problems with the request. Only populated when request is unsuccessful.",
+            "nullable": true
+          },
+          "result": {
+            "description": "The result of the request. Can be null if there is nothing to return or if the request is unsuccessful.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Standardized response for API endpoints."
+      },
+      "GameServerDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Id of game server.",
+            "nullable": true,
+            "example": "ABC32454"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of game server.",
+            "nullable": true,
+            "example": "NA East 1"
+          },
+          "ipAddress": {
+            "type": "string",
+            "description": "IP address of game server.",
+            "nullable": true,
+            "example": "192.168.1.1"
+          },
+          "port": {
+            "type": "integer",
+            "description": "Port of game server.",
+            "format": "int32",
+            "example": 25565
+          },
+          "playerCount": {
+            "type": "integer",
+            "description": "Number of players current connected to the game server.",
+            "format": "int32",
+            "example": 0
+          },
+          "maxPlayers": {
+            "type": "integer",
+            "description": "Max number of players allowed to be connected to game server.",
+            "format": "int32",
+            "example": 8
+          }
+        },
+        "additionalProperties": false,
+        "description": "DTO that represents a registered game server."
+      },
+      "GameServerDetailsDTOListAPIResponse": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "description": "Indicates whether request was successful."
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of errors, if any, describing problems with the request. Only populated when request is unsuccessful.",
+            "nullable": true
+          },
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GameServerDetailsDTO"
+            },
+            "description": "The result of the request. Can be null if there is nothing to return or if the request is unsuccessful.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Standardized response for API endpoints."
+      },
+      "GameServerRegisterDTO": {
+        "required": [
+          "ipAddress",
+          "name",
+          "port"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Name of game server",
+            "example": "NA East 1"
+          },
+          "ipAddress": {
+            "minLength": 1,
+            "pattern": "^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$",
+            "type": "string",
+            "description": "IPAddress of game server",
+            "example": "192.168.1.1"
+          },
+          "port": {
+            "maximum": 65535,
+            "minimum": 1,
+            "type": "integer",
+            "description": "Port of game server",
+            "format": "int32",
+            "example": 25565
+          },
+          "maxPlayers": {
+            "type": "integer",
+            "description": "Max amount of players allowed in game server.",
+            "format": "int32",
+            "example": 8
+          }
+        },
+        "additionalProperties": false
+      },
+      "GameServerValidatePlayerDTO": {
+        "required": [
+          "playerJoinToken"
+        ],
+        "type": "object",
+        "properties": {
+          "playerJoinToken": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "HttpStatusCode": {
+        "enum": [
+          100,
+          101,
+          102,
+          103,
+          200,
+          201,
+          202,
+          203,
+          204,
+          205,
+          206,
+          207,
+          208,
+          226,
+          300,
+          301,
+          302,
+          303,
+          304,
+          305,
+          306,
+          307,
+          308,
+          400,
+          401,
+          402,
+          403,
+          404,
+          405,
+          406,
+          407,
+          408,
+          409,
+          410,
+          411,
+          412,
+          413,
+          414,
+          415,
+          416,
+          417,
+          421,
+          422,
+          423,
+          424,
+          426,
+          428,
+          429,
+          431,
+          451,
+          500,
+          501,
+          502,
+          503,
+          504,
+          505,
+          506,
+          507,
+          508,
+          510,
+          511
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "LoginRequestDTO": {
+        "required": [
+          "password",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Username of desired user.",
+            "example": "Player25"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Password of desired user.",
+            "example": "Password123$"
+          }
+        },
+        "additionalProperties": false,
+        "description": "DTO that holds information required to sign in"
+      },
+      "LoginResponseDTO": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/UserDTO"
+          },
+          "role": {
+            "type": "string",
+            "description": "Role of signed in user.",
+            "nullable": true,
+            "example": "Player"
+          },
+          "token": {
+            "type": "string",
+            "description": "Token used to authorize future API requests.",
+            "nullable": true,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          }
+        },
+        "additionalProperties": false,
+        "description": "DTO that is stored in response after a successful login request"
+      },
+      "LoginResponseDTOAPIResponse": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "description": "Indicates whether request was successful."
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of errors, if any, describing problems with the request. Only populated when request is unsuccessful.",
+            "nullable": true
+          },
+          "result": {
+            "$ref": "#/components/schemas/LoginResponseDTO"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Standardized response for API endpoints."
+      },
+      "Operation": {
+        "type": "object",
+        "properties": {
+          "operationType": {
+            "$ref": "#/components/schemas/OperationType"
+          },
+          "path": {
+            "type": "string",
+            "nullable": true
+          },
+          "op": {
+            "type": "string",
+            "nullable": true
+          },
+          "from": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OperationType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "PlayerProfileDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Data transfer object representing a player's profile"
+      },
+      "PlayerProfileDTOAPIResponse": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "description": "Indicates whether request was successful."
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of errors, if any, describing problems with the request. Only populated when request is unsuccessful.",
+            "nullable": true
+          },
+          "result": {
+            "$ref": "#/components/schemas/PlayerProfileDTO"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Standardized response for API endpoints."
+      },
+      "PlayerTokenRequestDTO": {
+        "type": "object",
+        "properties": {
+          "serverID": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegistrationRequestDTO": {
+        "required": [
+          "email",
+          "password",
+          "userName"
+        ],
+        "type": "object",
+        "properties": {
+          "userName": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Username of new user.",
+            "example": "Player25"
+          },
+          "email": {
+            "minLength": 1,
+            "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+            "type": "string",
+            "description": "Email of new user.",
+            "format": "email",
+            "example": "Player25@example.com"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Password of new user.",
+            "example": "Password123$"
+          }
+        },
+        "additionalProperties": false,
+        "description": "DTO that holds information required for a registration request."
+      },
+      "StringAPIResponse": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "description": "Indicates whether request was successful."
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of errors, if any, describing problems with the request. Only populated when request is unsuccessful.",
+            "nullable": true
+          },
+          "result": {
+            "type": "string",
+            "description": "The result of the request. Can be null if there is nothing to return or if the request is unsuccessful.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Standardized response for API endpoints."
+      },
+      "UserDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID of the user",
+            "nullable": true,
+            "example": "1764DSF345tDF45"
+          },
+          "userName": {
+            "type": "string",
+            "description": "Username of the user",
+            "nullable": true,
+            "example": "Player25"
+          }
+        },
+        "additionalProperties": false,
+        "description": "DTO that holds user information that is sent back after successful\r\nregistration."
+      },
+      "UserDTOAPIResponse": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "description": "Indicates whether request was successful."
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of errors, if any, describing problems with the request. Only populated when request is unsuccessful.",
+            "nullable": true
+          },
+          "result": {
+            "$ref": "#/components/schemas/UserDTO"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Standardized response for API endpoints."
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme \r\n\r\nEnter 'Bearer' [space] and then your token in the text input below. \r\n\r\nExample: \"Bearer 12345abcdef\"",
+        "scheme": "Bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}
